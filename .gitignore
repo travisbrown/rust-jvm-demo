@@ -1,0 +1,14 @@
+target/
+.idea/
+.idea_modules/
+.DS_STORE
+.cache
+.settings
+.project
+.classpath
+tmp/
+.bloop/
+.metals/
+.bsp/
+project/metals.sbt
+.vscode/
