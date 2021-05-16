@@ -1,5 +1,7 @@
 package demo
 
+import java.nio.charset.StandardCharsets
+
 class SerdeOperations(maxMemory: Int) extends Operations {
   private val wasmImpl = new Wasm(maxMemory)
 
@@ -23,19 +25,19 @@ class SerdeOperations(maxMemory: Int) extends Operations {
     val resultOffset = wasmImpl.extract_urls(offset, input.length)
 
     buffer.position(resultOffset)
+    val slice = buffer.slice()
+    var i = 0
 
-    val result = LazyList
-      .unfold(buffer)(b =>
-        if (b.hasRemaining()) {
-          val c = b.get() & 0xff
-          if (c > 0) Some((c.toChar, b)) else None
-        } else None
-      )
-      .mkString
+    while (buffer.hasRemaining() && buffer.get() != 0x00) {
+      i += 1
+    }
+
+    slice.limit(i)
+    val result = StandardCharsets.UTF_8.decode(slice).toString
 
     this.wasmImpl.dealloc(resultOffset, buffer.position() - resultOffset)
     result
   }
 }
 
-object SerdeOperations extends SerdeOperations(20 * 65536)
+object SerdeOperations extends SerdeOperations(18 * 65536)

@@ -24,7 +24,7 @@ The Rust implementation uses [Serde](https://docs.serde.rs/serde_json/) and the 
 
 I've [compiled the Rust implementations into WASM](https://rustwasm.github.io/docs/book/)
 and then the WASM into JVM bytecode with a modified version of [Asmble](https://github.com/cretz/asmble)
-(which unfortunately isn't currently maintained). The resulting jar is available in the `lib/` directory, and is currently only 40K.
+(which unfortunately isn't currently maintained). The resulting jar is available in the `lib/` directory, and is currently only 36K.
 
 There are tests and [JMH](https://openjdk.java.net/projects/code-tools/jmh/) benchmarks for the two implementations on the JVM.
 
@@ -41,10 +41,10 @@ and it looks okay (definitely better than I expected):
 
 ```
 Benchmark                      Mode  Cnt      Score      Error  Units
-ExtractUrlsBench.circe        thrpt   20  48372.855 ± 1184.233  ops/s
-ExtractUrlsBench.serde        thrpt   20   8558.829 ±  112.245  ops/s
-CountScalarValuesBench.circe  thrpt   20  55631.020 ± 1130.232  ops/s
-CountScalarValuesBench.serde  thrpt   20  13847.015 ±  206.873  ops/s
+ExtractUrlsBench.circe        thrpt   20  51351.757 ±  749.093  ops/s
+ExtractUrlsBench.serde        thrpt   20  14380.148 ±   30.884  ops/s
+CountScalarValuesBench.circe  thrpt   20  57325.181 ± 2662.133  ops/s
+CountScalarValuesBench.serde  thrpt   20  16471.974 ±  345.556  ops/s
 ```
 
 Warning: this code is terrible and this approach might not end up working at all.
